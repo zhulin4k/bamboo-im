@@ -1,4 +1,5 @@
 from server_socket import ServerSocket
+from socket_wrapper import SocketWrapper
 
 class Server(object):
     # server core
@@ -10,12 +11,12 @@ class Server(object):
         socket, addr = self.server_socket.accept()
 
         """ receive data from client """
-        recv_data = socket.recv(512)
-        print(recv_data.decode('UTF-8'))
+        client_socket = SocketWrapper(socket)
+        print(client_socket.recv_data())
 
         """ send data to client """
-        socket.send("success!".encode('UTF-8'))
-
+        client_socket.send_data("i am server")
+        
         """ close client connection """
         socket.close()
 
